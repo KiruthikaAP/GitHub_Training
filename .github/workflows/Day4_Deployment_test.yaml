@@ -1,0 +1,59 @@
+name: Deployment Excercise 1
+on: [push]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get code
+        uses: actions/checkout@v5
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run test
+        run: npm test
+
+      - name: Build code
+        run: npm run build
+
+      - name: Build server
+        run: echo " Build & Setup server..."  
+  
+  test:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get code
+        uses: actions/checkout@v5
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run test
+        run: npm test
+
+      - name: Build code
+        run: npm run build
+
+      - name: Deploy to test server
+        run: echo "Deploying to Test server..."  
+             
+    
+  deploy:
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get code
+        uses: actions/checkout@v5
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run test
+        run: npm test
+
+      - name: Build code
+        run: npm run build
+
+      - name: Deploy to production
+        run: echo "Deploying to production server..."
